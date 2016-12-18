@@ -111,32 +111,6 @@ void init_iphone_7() {
     
     struct_ipc_port_ip_kobject_offset = 0x68;
 }
-
-//file:kernel_iPhone9,4_10.1.1_14B100_d11.img.dec
-//kernel version:root:xnu-3789.22.3~1/RELEASE_ARM64_T8010
-void init_iphone_7_plus() {
-    allproc_offset = 0x5ec178;
-    kernproc_offset = 0x5f20e0;
-    
-    struct_proc_p_pid_offset = 0x10;
-    struct_proc_task_offset = 0x18;
-    struct_proc_p_uthlist_offset = 0x98;
-    struct_proc_p_ucred_offset = 0x100;
-    struct_proc_p_comm_offset = 0x26c;
-    
-    struct_kauth_cred_cr_ref_offset = 0x10;
-    
-    struct_uthread_uu_ucred_offset = 0x168;
-    struct_uthread_uu_list_offset = 0x170;
-    
-    struct_task_ref_count_offset = 0x10;
-    struct_task_itk_space_offset = 0x300;
-    
-    struct_ipc_space_is_table_offset = 0x20;
-    
-    struct_ipc_port_ip_kobject_offset = 0x68;
-}
-
 void init_iphone_6s_n71(){
   printf("setting offsets for iPhone 6s 10.1.1\n");
   allproc_offset = 0x5A4148;            //allproc offset
@@ -278,6 +252,7 @@ void init_macos_10_12_1() {
   
   struct_ipc_port_ip_kobject_offset = 0x68;
 }
+
 //file:kernel_iPhone7,2_10.1.1_14B100_n61.img.dec
 //kernel version:root:xnu-3789.22.3~1/RELEASE_ARM64_T7000
 void init_iphone_6_plus_n61() {
@@ -376,8 +351,8 @@ void init_offsets() {
     init_iphone_6s_plus_and_iphone_6s_n61();
     return;
     }
-  if (strstr(u.machine, "iPhone9,1")) {
-    // this is an iPhone 7
+  if (strstr(u.machine, "iPhone9,*")) {
+    // this is an iPhone 7 revision
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_T8010")){
         printf("this is a known kernel build for iPhone 7 - offsets should be okay\n");
     } else {
@@ -386,28 +361,8 @@ void init_offsets() {
     init_iphone_7();
     return;
     }
-  if (strstr(u.machine, "iPhone9,4")) {
-    // this is an iPhone 7 plus
-    if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_T8010")){
-        printf("this is a known kernel build for iPhone 7 plus - offsets should be okay\n");
-    } else {
-        unknown_build();
-    }
-    init_iphone_7_plus();
-    return;
-    }
-  if (strstr(u.machine, "iPhone9,3")) {
-    // this is an iPhone 7 plus as well
-    if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_T8010")){
-        printf("this is a known kernel build for iPhone 7 plus - offsets should be okay\n");
-    } else {
-        unknown_build();
-    }
-    init_iphone_7_plus();
-    return;
-    }
-  if (strstr(u.machine, "iPhone7,1")) {
-    // this is an iPhone 6
+  if (strstr(u.machine, "iPhone7,*")) {
+    // this is an iPhone 6 revision
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S8000")){
         printf("this is a known kernel build for iPhone 6 - offsets should be okay\n");
         init_iphone_6_n66();
