@@ -61,32 +61,6 @@ void init_iphone_6s_plus_and_iphone_6s_n61() {
     
     struct_ipc_port_ip_kobject_offset = 0x68;
 }
-
-//file:kernel_iPhone8,4_10.1.1_14B100_n69.img.dec
-//kernel version:root:xnu-3789.22.3~1/RELEASE_ARM64_S8000
-void init_iphone_se() {
-    allproc_offset = 0x5a4148;
-    kernproc_offset = 0x5aa0e0;
-    
-    struct_proc_p_pid_offset = 0x10;
-    struct_proc_task_offset = 0x18;
-    struct_proc_p_uthlist_offset = 0x98;
-    struct_proc_p_ucred_offset = 0x100;
-    struct_proc_p_comm_offset = 0x26c;
-    
-    struct_kauth_cred_cr_ref_offset = 0x10;
-    
-    struct_uthread_uu_ucred_offset = 0x168;
-    struct_uthread_uu_list_offset = 0x170;
-    
-    struct_task_ref_count_offset = 0x10;
-    struct_task_itk_space_offset = 0x300;
-    
-    struct_ipc_space_is_table_offset = 0x20;
-    
-    struct_ipc_port_ip_kobject_offset = 0x68;
-}
-
 //file:kernel_iPhone9,1_10.1.1_14B150_d10.img.dec
 //kernel version:root:xnu-3789.22.3~1/RELEASE_ARM64_T8010
 void init_iphone_7() {
@@ -277,6 +251,28 @@ void init_iphone_6_plus_n61() {
     
     struct_ipc_port_ip_kobject_offset = 0x68;
 }
+void init_iphone_5s() {
+    allproc_offset = 0x5a4128;
+    kernproc_offset = 0x5aa0e0;
+    
+    struct_proc_p_pid_offset = 0x10;
+    struct_proc_task_offset = 0x18;
+    struct_proc_p_uthlist_offset = 0x98;
+    struct_proc_p_ucred_offset = 0x100;
+    struct_proc_p_comm_offset = 0x26c;
+    
+    struct_kauth_cred_cr_ref_offset = 0x10;
+    
+    struct_uthread_uu_ucred_offset = 0x168;
+    struct_uthread_uu_list_offset = 0x170;
+    
+    struct_task_ref_count_offset = 0x10;
+    struct_task_itk_space_offset = 0x300;
+    
+    struct_ipc_space_is_table_offset = 0x20;
+    
+    struct_ipc_port_ip_kobject_offset = 0x68;
+}
 void unknown_build() {
   printf("This is an unknown kernel build - the offsets are likely to be incorrect and it's very unlikely this exploit will work\n");
   printf("You need to find these two kernel symbols:\n");
@@ -321,6 +317,16 @@ void init_offsets() {
     init_ipad_mini_2();
     return;
   }
+  if (strstr(u.machine, "iPhone6,1")) {
+    // this is an iPhone 5S
+    if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S5L8960X")){
+        printf("this is a known kernel build for iPhone 5s - offsets should be okay\n");
+    } else {
+        unknown_build();
+    }
+    init_iphone_5s();
+    return;
+    }
   if (strstr(u.machine, "iPhone8,1")) {
     // this is an iPhone 6S
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S8000")){
@@ -338,7 +344,7 @@ void init_offsets() {
     } else {
         unknown_build();
     }
-    init_iphone_se();
+      init_iphone_6s_n71();
     return;
     }
   if (strstr(u.machine, "iPhone8,2")) {
@@ -354,7 +360,7 @@ void init_offsets() {
   if (strstr(u.machine, "iPhone9,*")) {
     // this is an iPhone 7 revision
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_T8010")){
-        printf("this is a known kernel build for iPhone 7 - offsets should be okay\n");
+        printf("this is a known kernel build for any iPhone 7 revision- offsets should be okay\n");
     } else {
         unknown_build();
     }
@@ -364,7 +370,7 @@ void init_offsets() {
   if (strstr(u.machine, "iPhone7,*")) {
     // this is an iPhone 6 revision
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S8000")){
-        printf("this is a known kernel build for iPhone 6 - offsets should be okay\n");
+        printf("this is a known kernel build for any iPhone 6 revision - offsets should be okay\n");
         init_iphone_6_n66();
     } else {
         if(strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_T7000")){
