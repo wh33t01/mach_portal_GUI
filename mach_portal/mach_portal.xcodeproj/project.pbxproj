@@ -153,7 +153,7 @@
 				ORGANIZATIONNAME = "Ian Beer";
 				TargetAttributes = {
 					B0FB96FB1DEB2C8600C0D3C4 = {
-						CreatedOnToolsVersion = 8.1;
+						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 6K58BKJ8PL;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
