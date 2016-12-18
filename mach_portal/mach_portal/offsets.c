@@ -280,7 +280,6 @@ void unknown_build() {
   printf("  kernproc\n\n");
   printf("and update the code\n");
 }
-
 void init_offsets() {
   struct utsname u = {0};
   int err = uname(&u);
@@ -307,20 +306,20 @@ void init_offsets() {
     init_ipod_touch_6g();
     return;
   }
-  if (strstr(u.machine, "iPad4,4")) {
-    // this is an iPad mini 2
-    if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S5L8960X")){
-      printf("this is a known kernel build for iPad mini 2 - offsets should be okay\n");
-    } else {
-      unknown_build();
-    }
-    init_ipad_mini_2();
-    return;
-  }
   if (strstr(u.machine, "iPhone6,1")) {
     // this is an iPhone 5S
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S5L8960X")){
         printf("this is a known kernel build for iPhone 5s - offsets should be okay\n");
+    } else {
+        unknown_build();
+    }
+    init_iphone_5s();
+    return;
+    }
+  if (strstr(u.machine, "iPad4,*")) {
+    // this is an iPhone 5S
+    if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S5L8960X")){
+        printf("this is a known kernel build for iPhone 5s, iPad mini 2 and iPad Air- offsets should be okay\n");
     } else {
         unknown_build();
     }
@@ -336,7 +335,17 @@ void init_offsets() {
     }
     init_iphone_6s_n71();
     return;
-    }
+  }
+  if (strstr(u.machine, "iPad6,*")) {
+    // this is an iPhone 6S
+    if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S8000")){
+        printf("this is a known kernel build for iPad Pro - offsets should be okay\n");
+      }else {
+        unknown_build();
+      
+    init_iphone_6s_n71();
+    return;
+  }
   if (strstr(u.machine, "iPhone8,4")) {
     // this is an iPhone se
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S8000")){
@@ -366,8 +375,8 @@ void init_offsets() {
     }
     init_iphone_7();
     return;
-    }
-  if (strstr(u.machine, "iPhone7,*")) {
+  }
+      if (strstr(u.machine, "iPhone7,*")) {
     // this is an iPhone 6 revision
     if (strstr(u.version, "root:xnu-3789.22.3~1/RELEASE_ARM64_S8000")){
         printf("this is a known kernel build for any iPhone 6 revision - offsets should be okay\n");
@@ -381,8 +390,9 @@ void init_offsets() {
             return;
         }
     }
-  }
+      }
   printf("don't recognize this platform\n");
   unknown_build();
   init_ipad_mini_2(); // this won't work!
+  }
 }
